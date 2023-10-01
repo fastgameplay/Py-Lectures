@@ -8,15 +8,17 @@ class Shape:
 
 
 class Circle(Shape):
-    def __init__(self, radius):
-        self._radius = radius
+    def __init__(self, radius_value):
+        self.radius = radius_value
 
     @property
     def radius(self):
         return self._radius
 
     @radius.setter
-    def age(self, value):
+    def radius(self, value):
+        if value < 0: 
+            raise ValueError
         self._radius = value
 
     def area(self):
@@ -27,8 +29,8 @@ class Circle(Shape):
 
 
 class Square(Shape):
-    def __init__(self, side_length):
-        self._side_length = side_length
+    def __init__(self, side_length_value):
+        self.side_length = side_length_value
 
     @property
     def side_length(self):
@@ -43,3 +45,4 @@ class Square(Shape):
 
     def perimeter(self):
         return 4 * self._side_length
+    
