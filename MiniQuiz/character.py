@@ -23,7 +23,6 @@ class Character:
         if value >= 0:
             self._health = value
         else:
-            print("Health cannot be negative. Setting health to 0.")
             self._health = 0
 
     def attack(self, opponent):

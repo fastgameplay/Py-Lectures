@@ -1,4 +1,4 @@
-from character import Character;
+from character import Character
 
 class Player(Character):
     def __init__(self, name, health, attack_power, gold):
@@ -14,4 +14,4 @@ class Player(Character):
         print(f"{self.name} has collected {amount} gold!")
 
     def __str__(self):
-        return f"{super().__str__()}, Gold: {self.gold}"
+        return f"Player: {super().__str__()}, Gold: {self.gold}"

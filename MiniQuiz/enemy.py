@@ -1,4 +1,4 @@
-from character import Character;
+from character import Character
 
 class Enemy(Character):
     def __init__(self, name, health, attack_power, gold_reward):
@@ -14,4 +14,4 @@ class Enemy(Character):
         return self.gold_reward
 
     def __str__(self):
-        return f"{super().__str__()}, Gold Reward: {self.gold_reward}"
+        return f"Enemy: {super().__str__()}, Gold Reward: {self.gold_reward}"
