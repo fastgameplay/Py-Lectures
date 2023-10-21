@@ -1,6 +1,7 @@
 from db_proxy import DataBaseManager as DBProxy
 from anime_base import Anime
 
+
 def main():
     database_name = "anime_database.db"
     with DBProxy(database_name) as db:
@@ -21,7 +22,10 @@ def main():
             if choice == "1":
                 name = input("Enter the name of the anime: ")
                 sport = input("Enter the sport of the anime: ")
-                finished_airing = input("Is the anime finished airing? (True/False): ").lower() == "true"
+                finished_airing = (
+                    input("Is the anime finished airing? (True/False): ").lower()
+                    == "true"
+                )
                 rating = float(input("Enter the rating (e.g., 7.5): "))
                 anime = Anime(None, name, sport, finished_airing, rating)
                 db.insert_row(anime)
@@ -51,6 +55,7 @@ def main():
                 db.disconnect()
                 print("Goodbye!")
                 break
+
 
 if __name__ == "__main__":
     main()

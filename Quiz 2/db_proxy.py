@@ -3,11 +3,13 @@ import random
 from texttable import Texttable
 from anime_base import Anime
 
+
 class DataBaseManager:
     def __init__(self, database_name):
         self.database_name = database_name
         self.connection = None
         self.cursor = None
+
     def __enter__(self):
         self.connect()
         self.create_table()
@@ -15,13 +17,14 @@ class DataBaseManager:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.disconnect()
-        
+
     def connect(self):
         self.connection = sqlite3.connect(self.database_name)
         self.cursor = self.connection.cursor()
 
     def create_table(self):
-        self.cursor.execute('''
+        self.cursor.execute(
+            """
             CREATE TABLE IF NOT EXISTS anime (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT,
@@ -30,12 +33,15 @@ class DataBaseManager:
                 rating REAL,
                 seen BOOLEAN
             )
-        ''')
+        """
+        )
         self.connection.commit()
 
     def insert_row(self, anime):
-        self.cursor.execute("INSERT INTO anime (name, sport, finished_airing, rating, seen) VALUES (?, ?, ?, ?, ?)",
-                            (anime.name, anime.sport, anime.finished_airing, anime.rating, anime.seen))
+        self.cursor.execute(
+            "INSERT INTO anime (name, sport, finished_airing, rating, seen) VALUES (?, ?, ?, ?, ?)",
+            (anime.name, anime.sport, anime.finished_airing, anime.rating, anime.seen),
+        )
         self.connection.commit()
 
     def delete_row(self, id):
@@ -63,7 +69,9 @@ class DataBaseManager:
             self.print_table(data)
 
     def select_random(self):
-        self.cursor.execute("SELECT * FROM anime WHERE finished_airing=? AND seen=?", (True, False))
+        self.cursor.execute(
+            "SELECT * FROM anime WHERE finished_airing=? AND seen=?", (True, False)
+        )
         data = self.cursor.fetchall()
         if not data:
             print("No unseen finished anime found.")
@@ -80,5 +88,14 @@ class DataBaseManager:
         table.set_cols_valign(["t", "t", "c", "c", "c", "c"])
         table.add_row(["ID", "Name", "Sport", "Finished Airing", "Rating", "Seen"])
         for row in data:
-            table.add_row([row[0], row[1], row[2], "Yes" if row[3] else "No", row[4], "Yes" if row[5] else "No"])
+            table.add_row(
+                [
+                    row[0],
+                    row[1],
+                    row[2],
+                    "Yes" if row[3] else "No",
+                    row[4],
+                    "Yes" if row[5] else "No",
+                ]
+            )
         print(table.draw())
